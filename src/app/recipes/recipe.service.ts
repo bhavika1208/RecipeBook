@@ -9,30 +9,38 @@ export class RecipeService{
 
     recipesChanged = new Subject<Recipe[]>();
 
-    private recipes: Recipe[] = [
-        new Recipe(
-            'Butter Panner Masala', 
-            'this is a simple test', 
-            'https://theurbantandoor.com/wp-content/uploads/2019/09/paneer-butter-masala.jpg',
-            [
-                new Ingredients ('Paneer', 1),
-                new Ingredients ('Vegetables', 1)
-            ]            
-            ),
-        new Recipe(
-            'Shahi Paneer', 
-            'this is a simple test', 
-            'https://theurbantandoor.com/wp-content/uploads/2019/09/paneer-butter-masala.jpg',
-            [
-                new Ingredients ('Paneer', 3),
-                new Ingredients ('Vegetables', 9)
-            ]            
-        )
-      ];
+    // private recipes: Recipe[] = [
+    //     new Recipe(
+            // 'Butter Panner Masala', 
+            // 'this is a simple test', 
+            // 'https://theurbantandoor.com/wp-content/uploads/2019/09/paneer-butter-masala.jpg',
+            // [
+            //     new Ingredients ('Paneer', 1),
+            //     new Ingredients ('Vegetables', 1)
+            // ]            
+    //         ),
+    //     new Recipe(
+    //         'Shahi Paneer', 
+    //         'this is a simple test', 
+    //         'https://theurbantandoor.com/wp-content/uploads/2019/09/paneer-butter-masala.jpg',
+    //         [
+    //             new Ingredients ('Paneer', 3),
+    //             new Ingredients ('Vegetables', 9)
+    //         ]            
+    //     )
+    //   ];
 
+     private recipes: Recipe[] = [];
+   
     constructor(private slService: ShoppingListService ){
 
     }
+
+    setRecipes(recipe: Recipe[]){
+        this.recipes = recipe;
+        this.recipesChanged.next(this.recipes.slice());
+    }
+
     getRecipes(){
         return this.recipes.slice();
     }
