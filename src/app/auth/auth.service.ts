@@ -1,7 +1,9 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError } from "rxjs/operators";
-import { throwError } from "rxjs";
+import { catchError, tap } from "rxjs/operators";
+import { BehaviorSubject, throwError } from "rxjs";
+import { User } from "./user.model";
+import { Route, Router } from "@angular/router";
 
 export interface AuthResponseData {
     kind: string;
@@ -18,28 +20,30 @@ export interface AuthResponseData {
     providedIn: 'root' 
 })
 export class AuthService{
-    
-    constructor(private http: HttpClient){
 
+    user = new BehaviorSubject<User>(null);
+    token: string = null;
+    private tokenExpirationTime: any;
+    
+    constructor(private http: HttpClient, private router: Router){
     }
 
     signup(email: string, password: string ){
-        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBArJ_yqO0_p9KbaJ7fWfeLmwxE0VxXNVs',
+        return this.http.post<AuthResponseData>(
+            'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBArJ_yqO0_p9KbaJ7fWfeLmwxE0VxXNVs',
         {
             email: email,
             password: password,
             returnSecuredToken: true
 
-        }).pipe(catchError(errorRes=>{
-            let errorMsg = "An Unknown error has been occured"
-            if(!errorRes.error || !errorRes.error.error){
-                return throwError(errorMsg);
-            }
-            
-            switch( errorRes.error.error.message){
-                case 'EMAIL_EXISTS': errorMsg = "An Email Exists Already"
-            }
-            return throwError(errorMsg);
+        }).pipe(catchError(this.handlError), 
+            tap(resData => {
+            this.handleAuthentication(
+                resData.email, 
+                resData.localId, 
+                resData.idToken, 
+                +resData.expiresIn
+            )
         }));
     }
 
@@ -48,6 +52,83 @@ export class AuthService{
             email: email,
             password: password,
             returnSecuredToken: true
-        })
+        }).pipe(catchError(this.handlError), tap(resData => {            
+            this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn)
+        }));
+    }
+
+    autoLogin(){
+        const userData: {
+            email : string;
+            id: string;
+            _token : string;
+            _tokenExpirationDate : string;
+        } = JSON.parse(localStorage.getItem('userData'));
+        if(!userData){
+            return;
+        }
+
+        const loadedUser = new User(
+            userData.email, 
+            userData.id, 
+            userData._token,
+            new Date(userData._tokenExpirationDate)
+        );
+    
+        if(loadedUser.token){
+            this.user.next(loadedUser);
+            const expirationDate = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
+            this.autoLogout(expirationDate);
+            console.log(expirationDate);
+        }
+    }
+
+    logout(){
+        this.user.next(null);
+        this.router.navigate(['./auth']);
+        localStorage.removeItem('userData');
+        if(this.tokenExpirationTime){
+            clearTimeout(this.tokenExpirationTime);
+        }
+        this.tokenExpirationTime = null;
+    }
+
+    autoLogout(expirationDuration: number){
+        console.log(expirationDuration);
+      
+        setTimeout(()=>{   
+            this.logout();
+        }, expirationDuration);
+    }
+
+    private handleAuthentication(email: string,userId: string, token: string, expiresIn: number){
+        const expirationDate = new Date(new Date().getTime()+ (expiresIn*1000));
+        const user = new User(email, userId, token, expirationDate)
+        this.user.next(user);
+        this.autoLogout(expiresIn * 1000);
+        localStorage.setItem('userData', JSON.stringify(user))
+    
+    }
+
+    private handlError(errorRes: HttpErrorResponse){
+        
+        let errorMsg = "An Unknown error has been occured"
+        console.log(errorRes.error.error);
+        
+        // errorRes.error && errorRes.error.error
+        if(!errorRes.error || !errorRes.error.error){
+            return throwError(errorMsg);
+        }
+        
+        switch( errorRes.error.error.message){
+            case 'EMAIL_EXISTS': errorMsg = "An Email Exists Already";
+                                break;
+            case 'EMAIL_NOT_FOUND': errorMsg = "This Email does not Exist";
+            break;
+            case 'INVALID_PASSWORD': errorMsg = "Password is Incorrect";
+            break;
+        
+        }
+        return throwError(errorMsg);       
     }
 }
