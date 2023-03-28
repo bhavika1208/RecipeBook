@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { BehaviorSubject, Subject, throwError } from "rxjs";
 import { catchError, tap } from "rxjs/operators";
-import { environment } from "src/environments/environment";
+import { environment } from "src/environments/environments";
 
 import { User } from "./user.model";
 
