@@ -20,6 +20,7 @@ import { RecipeService } from './recipes/recipe.service';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinner } from './shared/spineer/loading-spinner.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service'
+import { AlertComponent } from './shared/alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -35,8 +36,8 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service'
     DropdownDirective,
     RecipeStartComponent,
     RecipeEditComponent,
-    LoadingSpinner
-    
+    LoadingSpinner,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,3 +59,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service'
   
 })
 export class AppModule { }
+
+
+    // https://recipebook-c7f83-default-rtdb.firebaseio.com
+    // AIzaSyDzLGQj2UYQCx66VgeEe3PkRfacUhrbRmA

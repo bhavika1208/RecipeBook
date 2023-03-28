@@ -1,1 +1,36 @@
-{"ast":null,"code":"import { catchError } from \"rxjs/operators\";\nimport * as i0 from \"@angular/core\";\nimport * as i1 from \"@angular/common/http\";\nexport class AuthService {\n  constructor(http) {\n    this.http = http;\n  }\n  signup(email, password) {\n    return this.http.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBArJ_yqO0_p9KbaJ7fWfeLmwxE0VxXNVs', {\n      email: email,\n      password: password,\n      returnSecuredToken: true\n    }).pipe(catchError(errorRes => {\n      let errorMsg = \"An Unknown error has been occured\";\n      switch (errorRes.error.error.message) {\n        case 'EMAIL_EXISTS':\n          errorMsg = \"An Email Exists Already\";\n      }\n    }));\n  }\n}\nAuthService.ɵfac = function AuthService_Factory(t) {\n  return new (t || AuthService)(i0.ɵɵinject(i1.HttpClient));\n};\nAuthService.ɵprov = /*@__PURE__*/i0.ɵɵdefineInjectable({\n  token: AuthService,\n  factory: AuthService.ɵfac,\n  providedIn: 'root'\n});","map":{"version":3,"mappings":"AAEA,SAASA,UAAU,QAAQ,gBAAgB;;;AAgB3C,OAAM,MAAOC,WAAW;EAEpBC,YAAoBC,IAAgB;IAAhB,SAAI,GAAJA,IAAI;EAExB;EAEAC,MAAM,CAACC,KAAa,EAAEC,QAAgB;IAClC,OAAO,IAAI,CAACH,IAAI,CAACI,IAAI,CAAmB,uGAAuG,EAC/I;MACIF,KAAK,EAAEA,KAAK;MACZC,QAAQ,EAAEA,QAAQ;MAClBE,kBAAkB,EAAE;KACvB,CAAC,CAACC,IAAI,CAACT,UAAU,CAACU,QAAQ,IAAE;MACzB,IAAIC,QAAQ,GAAG,mCAAmC;MAClD,QAAQD,QAAQ,CAACE,KAAK,CAACA,KAAK,CAACC,OAAO;QAChC,KAAK,cAAc;UAAEF,QAAQ,GAAG,yBAAyB;MAAA;IAEjE,CAAC,CAAC,CAAC;EACP;;AAlBSV,WAAW;mBAAXA,WAAW;AAAA;AAAXA,WAAW;SAAXA,WAAW;EAAAa,SAAXb,WAAW;EAAAc,YAFR;AAAM","names":["catchError","AuthService","constructor","http","signup","email","password","post","returnSecuredToken","pipe","errorRes","errorMsg","error","message","factory","providedIn"],"sourceRoot":"","sources":["/home/bhavika/Documents/bhavika/Angular/Project/src/app/auth/auth.service.ts"],"sourcesContent":["import { HttpClient } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport { catchError } from \"rxjs/operators\";\nimport { throwError } from \"rxjs\";\n\ninterface AuthResponseData {\n    kind: string;\n    idToken: string;\n    email: string;\n    refreshToken: string;\n    expiresIn: string\n    localId: string\n}\n\n\n@Injectable({ \n    providedIn: 'root' \n})\nexport class AuthService{\n    \n    constructor(private http: HttpClient){\n\n    }\n\n    signup(email: string, password: string ){\n        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBArJ_yqO0_p9KbaJ7fWfeLmwxE0VxXNVs',\n        {\n            email: email,\n            password: password,\n            returnSecuredToken: true\n        }).pipe(catchError(errorRes=>{\n            let errorMsg = \"An Unknown error has been occured\"\n            switch( errorRes.error.error.message){\n                case 'EMAIL_EXISTS': errorMsg = \"An Email Exists Already\"\n            }\n        }));\n    }\n}  "]},"metadata":{},"sourceType":"module","externalDependencies":[]}
+{
+    "ast": null,
+    "code": "import { catchError } from \"rxjs/operators\";\nimport * as i0 from \"@angular/core\";\nimport * as i1 from \"@angular/common/http\";\nexport class AuthService {\n  constructor(http) {\n    this.http = http;\n  }\n  signup(email, password) {\n    return this.http.post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDzLGQj2UYQCx66VgeEe3PkRfacUhrbRmA', {\n      email: email,\n      password: password,\n      returnSecuredToken: true\n    }).pipe(catchError(errorRes => {\n      let errorMsg = \"An Unknown error has been occured\";\n      switch (errorRes.error.error.message) {\n        case 'EMAIL_EXISTS':\n          errorMsg = \"An Email Exists Already\";\n      }\n    }));\n  }\n}\nAuthService.ɵfac = function AuthService_Factory(t) {\n  return new (t || AuthService)(i0.ɵɵinject(i1.HttpClient));\n};\nAuthService.ɵprov = /*@__PURE__*/i0.ɵɵdefineInjectable({\n  token: AuthService,\n  factory: AuthService.ɵfac,\n  providedIn: 'root'\n});",
+    "map": {
+        "version": 3,
+        "mappings": "AAEA,SAASA,UAAU,QAAQ,gBAAgB;;;AAgB3C,OAAM,MAAOC,WAAW;EAEpBC,YAAoBC,IAAgB;IAAhB,SAAI,GAAJA,IAAI;EAExB;EAEAC,MAAM,CAACC,KAAa,EAAEC,QAAgB;IAClC,OAAO,IAAI,CAACH,IAAI,CAACI,IAAI,CAAmB,uGAAuG,EAC/I;MACIF,KAAK,EAAEA,KAAK;MACZC,QAAQ,EAAEA,QAAQ;MAClBE,kBAAkB,EAAE;KACvB,CAAC,CAACC,IAAI,CAACT,UAAU,CAACU,QAAQ,IAAE;MACzB,IAAIC,QAAQ,GAAG,mCAAmC;MAClD,QAAQD,QAAQ,CAACE,KAAK,CAACA,KAAK,CAACC,OAAO;QAChC,KAAK,cAAc;UAAEF,QAAQ,GAAG,yBAAyB;MAAA;IAEjE,CAAC,CAAC,CAAC;EACP;;AAlBSV,WAAW;mBAAXA,WAAW;AAAA;AAAXA,WAAW;SAAXA,WAAW;EAAAa,SAAXb,WAAW;EAAAc,YAFR;AAAM",
+        "names": [
+            "catchError",
+            "AuthService",
+            "constructor",
+            "http",
+            "signup",
+            "email",
+            "password",
+            "post",
+            "returnSecuredToken",
+            "pipe",
+            "errorRes",
+            "errorMsg",
+            "error",
+            "message",
+            "factory",
+            "providedIn"
+        ],
+        "sourceRoot": "",
+        "sources": [
+            "/home/bhavika/Documents/bhavika/Angular/Project/src/app/auth/auth.service.ts"
+        ],
+        "sourcesContent": [
+            "import { HttpClient } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport { catchError } from \"rxjs/operators\";\nimport { throwError } from \"rxjs\";\n\ninterface AuthResponseData {\n    kind: string;\n    idToken: string;\n    email: string;\n    refreshToken: string;\n    expiresIn: string\n    localId: string\n}\n\n\n@Injectable({ \n    providedIn: 'root' \n})\nexport class AuthService{\n    \n    constructor(private http: HttpClient){\n\n    }\n\n    signup(email: string, password: string ){\n        return this.http.post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDzLGQj2UYQCx66VgeEe3PkRfacUhrbRmA',\n        {\n            email: email,\n            password: password,\n            returnSecuredToken: true\n        }).pipe(catchError(errorRes=>{\n            let errorMsg = \"An Unknown error has been occured\"\n            switch( errorRes.error.error.message){\n                case 'EMAIL_EXISTS': errorMsg = \"An Email Exists Already\"\n            }\n        }));\n    }\n}  "
+        ]
+    },
+    "metadata": {},
+    "sourceType": "module",
+    "externalDependencies": []
+}

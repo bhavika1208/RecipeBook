@@ -1,1 +1,37 @@
-{"ast":null,"code":"import * as i0 from \"@angular/core\";\nimport * as i1 from \"@angular/common/http\";\nimport * as i2 from \"../recipes/recipe.service\";\nexport class DataStorageService {\n  constructor(http, recipeService) {\n    this.http = http;\n    this.recipeService = recipeService;\n  }\n  storeRecipes() {\n    const recipes = this.recipeService.getRecipes();\n    return this.http.put('https://ng-course-recipe-book-8e6f3-default-rtdb.firebaseio.com/recipes.json', recipes).subscribe(response => {\n      console.log(response);\n    });\n  }\n  fetchRecipes() {\n    return this.http.get('https://ng-course-recipe-book-8e6f3-default-rtdb.firebaseio.com/recipes.json').subscribe(response => {\n      this.recipeService.setRecipe(recipes);\n    });\n  }\n}\nDataStorageService.ɵfac = function DataStorageService_Factory(t) {\n  return new (t || DataStorageService)(i0.ɵɵinject(i1.HttpClient), i0.ɵɵinject(i2.RecipeService));\n};\nDataStorageService.ɵprov = /*@__PURE__*/i0.ɵɵdefineInjectable({\n  token: DataStorageService,\n  factory: DataStorageService.ɵfac,\n  providedIn: 'root'\n});","map":{"version":3,"mappings":";;;AASA,OAAM,MAAOA,kBAAkB;EAE3BC,YAAoBC,IAAgB,EAAUC,aAA4B;IAAtD,SAAI,GAAJD,IAAI;IAAsB,kBAAa,GAAbC,aAAa;EAC3D;EAEAC,YAAY;IACR,MAAMC,OAAO,GAAG,IAAI,CAACF,aAAa,CAACG,UAAU,EAAE;IAC/C,OAAO,IAAI,CAACJ,IAAI,CAACK,GAAG,CAAC,8EAA8E,EAAEF,OAAO,CAAC,CAC5GG,SAAS,CACLC,QAAQ,IAAG;MACRC,OAAO,CAACC,GAAG,CAACF,QAAQ,CAAC;IAEzB,CAAC,CACJ;EACL;EAEAG,YAAY;IACR,OAAO,IAAI,CAACV,IAAI,CAACW,GAAG,CAAW,8EAA8E,CAAC,CAC7GL,SAAS,CACLC,QAAQ,IAAG;MACR,IAAI,CAACN,aAAa,CAACW,SAAS,CAACT,OAAO,CAAC;IAEzC,CAAC,CACJ;EACL;;AAxBSL,kBAAkB;mBAAlBA,kBAAkB;AAAA;AAAlBA,kBAAkB;SAAlBA,kBAAkB;EAAAe,SAAlBf,kBAAkB;EAAAgB,YAFf;AAAM","names":["DataStorageService","constructor","http","recipeService","storeRecipes","recipes","getRecipes","put","subscribe","response","console","log","fetchRecipes","get","setRecipe","factory","providedIn"],"sourceRoot":"","sources":["/home/bhavika/Documents/bhavika/Angular/Project/src/app/shared/data-storage.service.ts"],"sourcesContent":["import { HttpClient } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport { Recipe } from \"../recipes/recipe.model\";\nimport { RecipeService } from \"../recipes/recipe.service\";\n\n\n@Injectable({\n    providedIn: 'root'\n})\nexport class DataStorageService{\n\n    constructor(private http: HttpClient, private recipeService: RecipeService){\n    }\n\n    storeRecipes(){\n        const recipes = this.recipeService.getRecipes();\n        return this.http.put('https://ng-course-recipe-book-8e6f3-default-rtdb.firebaseio.com/recipes.json', recipes)\n        .subscribe(\n            (response)=>{\n                console.log(response);\n                \n            }\n        );\n    }\n    \n    fetchRecipes(){\n        return this.http.get<Recipe[]>('https://ng-course-recipe-book-8e6f3-default-rtdb.firebaseio.com/recipes.json')\n        .subscribe(\n            (response)=>{\n                this.recipeService.setRecipe(recipes);\n                \n            }\n        );\n    }\n\n}"]},"metadata":{},"sourceType":"module","externalDependencies":[]}
+{
+    "ast": null,
+    "code": "import * as i0 from \"@angular/core\";\nimport * as i1 from \"@angular/common/http\";\nimport * as i2 from \"../recipes/recipe.service\";\nexport class DataStorageService {\n  constructor(http, recipeService) {\n    this.http = http;\n    this.recipeService = recipeService;\n  }\n  storeRecipes() {\n    const recipes = this.recipeService.getRecipes();\n    return this.http.put('https://recipebook-c7f83-default-rtdb.firebaseio.com/recipes.json', recipes).subscribe(response => {\n      console.log(response);\n    });\n  }\n  fetchRecipes() {\n    return this.http.get('https://recipebook-c7f83-default-rtdb.firebaseio.com/recipes.json').subscribe(response => {\n      this.recipeService.setRecipe(recipes);\n    });\n  }\n}\nDataStorageService.ɵfac = function DataStorageService_Factory(t) {\n  return new (t || DataStorageService)(i0.ɵɵinject(i1.HttpClient), i0.ɵɵinject(i2.RecipeService));\n};\nDataStorageService.ɵprov = /*@__PURE__*/i0.ɵɵdefineInjectable({\n  token: DataStorageService,\n  factory: DataStorageService.ɵfac,\n  providedIn: 'root'\n});",
+    "map": {
+        "version": 3,
+        "mappings": ";;;AASA,OAAM,MAAOA,kBAAkB;EAE3BC,YAAoBC,IAAgB,EAAUC,aAA4B;IAAtD,SAAI,GAAJD,IAAI;IAAsB,kBAAa,GAAbC,aAAa;EAC3D;EAEAC,YAAY;IACR,MAAMC,OAAO,GAAG,IAAI,CAACF,aAAa,CAACG,UAAU,EAAE;IAC/C,OAAO,IAAI,CAACJ,IAAI,CAACK,GAAG,CAAC,8EAA8E,EAAEF,OAAO,CAAC,CAC5GG,SAAS,CACLC,QAAQ,IAAG;MACRC,OAAO,CAACC,GAAG,CAACF,QAAQ,CAAC;IAEzB,CAAC,CACJ;EACL;EAEAG,YAAY;IACR,OAAO,IAAI,CAACV,IAAI,CAACW,GAAG,CAAW,8EAA8E,CAAC,CAC7GL,SAAS,CACLC,QAAQ,IAAG;MACR,IAAI,CAACN,aAAa,CAACW,SAAS,CAACT,OAAO,CAAC;IAEzC,CAAC,CACJ;EACL;;AAxBSL,kBAAkB;mBAAlBA,kBAAkB;AAAA;AAAlBA,kBAAkB;SAAlBA,kBAAkB;EAAAe,SAAlBf,kBAAkB;EAAAgB,YAFf;AAAM",
+        "names": [
+            "DataStorageService",
+            "constructor",
+            "http",
+            "recipeService",
+            "storeRecipes",
+            "recipes",
+            "getRecipes",
+            "put",
+            "subscribe",
+            "response",
+            "console",
+            "log",
+            "fetchRecipes",
+            "get",
+            "setRecipe",
+            "factory",
+            "providedIn"
+        ],
+        "sourceRoot": "",
+        "sources": [
+            "/home/bhavika/Documents/bhavika/Angular/Project/src/app/shared/data-storage.service.ts"
+        ],
+        "sourcesContent": [
+            "import { HttpClient } from \"@angular/common/http\";\nimport { Injectable } from \"@angular/core\";\nimport { Recipe } from \"../recipes/recipe.model\";\nimport { RecipeService } from \"../recipes/recipe.service\";\n\n\n@Injectable({\n    providedIn: 'root'\n})\nexport class DataStorageService{\n\n    constructor(private http: HttpClient, private recipeService: RecipeService){\n    }\n\n    storeRecipes(){\n        const recipes = this.recipeService.getRecipes();\n        return this.http.put('https://recipebook-c7f83-default-rtdb.firebaseio.com/recipes.json', recipes)\n        .subscribe(\n            (response)=>{\n                console.log(response);\n                \n            }\n        );\n    }\n    \n    fetchRecipes(){\n        return this.http.get<Recipe[]>('https://recipebook-c7f83-default-rtdb.firebaseio.com/recipes.json')\n        .subscribe(\n            (response)=>{\n                this.recipeService.setRecipe(recipes);\n                \n            }\n        );\n    }\n\n}"
+        ]
+    },
+    "metadata": {},
+    "sourceType": "module",
+    "externalDependencies": []
+}
